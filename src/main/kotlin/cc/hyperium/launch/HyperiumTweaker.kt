@@ -1,13 +1,10 @@
 package cc.hyperium.launch
 
 import cc.hyperium.Hyperium
-import cc.hyperium.internal.addons.AddonBootstrap.init
 import cc.hyperium.launch.patching.PatchManager
 import net.minecraft.launchwrapper.ITweaker
 import net.minecraft.launchwrapper.Launch
 import net.minecraft.launchwrapper.LaunchClassLoader
-import org.spongepowered.asm.launch.MixinBootstrap
-import org.spongepowered.asm.mixin.MixinEnvironment
 import java.io.File
 import java.io.IOException
 import java.net.MalformedURLException
@@ -32,6 +29,7 @@ class HyperiumTweaker : ITweaker {
     override fun getLaunchTarget() = "net.minecraft.client.main.Main"
 
     override fun injectIntoClassLoader(classLoader: LaunchClassLoader) {
+        System.out.println("I am HyperiumTweaker.kt! LaunchClassLoader is ${classLoader.hashCode()}, but I am loaded by ${this.javaClass.classLoader.hashCode()}")
         Hyperium.LOGGER.info("Initialising patcher...")
         try {
             PatchManager.INSTANCE.setup(classLoader, false)
@@ -49,20 +47,7 @@ class HyperiumTweaker : ITweaker {
         } catch (ignored: IOException) {
         }
 
-        Hyperium.LOGGER.info("Loading Addons...")
-        Hyperium.LOGGER.info("Initialising Bootstraps...")
-        MixinBootstrap.init()
-        init()
-        Hyperium.LOGGER.info("Applying transformers...")
-        val environment = MixinEnvironment.getDefaultEnvironment()
-
-        if (optifine) {
-            environment.obfuscationContext = "notch"
-        }
-
-        if (environment.obfuscationContext == null) {
-            environment.obfuscationContext = "notch"
-        }
+        HyperiumTweakerInjector.callFromClassloader(classLoader,optifine)
 
         try {
             classLoader.addURL(
@@ -74,8 +59,6 @@ class HyperiumTweaker : ITweaker {
         } catch (e: MalformedURLException) {
             e.printStackTrace()
         }
-
-        environment.side = MixinEnvironment.Side.CLIENT
     }
 
     override fun getLaunchArguments(): Array<String?> {

@@ -201,6 +201,7 @@ object AddonMinecraftBootstrap {
             }
             AddonBootstrap.phase = AddonBootstrap.Phase.DEFAULT
         } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
