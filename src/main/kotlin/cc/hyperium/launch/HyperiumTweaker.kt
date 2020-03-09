@@ -29,7 +29,6 @@ class HyperiumTweaker : ITweaker {
     override fun getLaunchTarget() = "net.minecraft.client.main.Main"
 
     override fun injectIntoClassLoader(classLoader: LaunchClassLoader) {
-        System.out.println("I am HyperiumTweaker.kt! LaunchClassLoader is ${classLoader.hashCode()}, but I am loaded by ${this.javaClass.classLoader.hashCode()}")
         Hyperium.LOGGER.info("Initialising patcher...")
         try {
             PatchManager.INSTANCE.setup(classLoader, false)
