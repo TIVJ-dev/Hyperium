@@ -12,9 +12,9 @@
      public static void resetKeyBindingArrayAndHash() {
          hash.clearMap();
  
-+        if (Hyperium.INSTANCE != null) {
++        if (Hyperium.INSTANCE != null && Hyperium.INSTANCE.getHandlers() != null) {
 +            for (HyperiumKeybind bind : Hyperium.INSTANCE.getHandlers().getKeybindHandler().getKeybinds().values()) {
-+              hash.addKey(bind.getKeyCode(), bind.toKeyBind());
++                hash.addKey(bind.getKeyCode(), bind.toKeyBind());
 +            }
 +        }
 +

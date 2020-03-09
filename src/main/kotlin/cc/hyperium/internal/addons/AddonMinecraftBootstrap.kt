@@ -62,6 +62,7 @@ object AddonMinecraftBootstrap {
     fun init() {
         try {
             if (AddonBootstrap.phase != AddonBootstrap.Phase.INIT) {
+                println("Throwing eggception, classloader is ${this.javaClass.classLoader.hashCode()}")
                 throw AddonLoadException("Bootstrap is currently at Phase.${AddonBootstrap.phase} when it should be at Phase.INIT")
             }
 

@@ -1,5 +1,6 @@
 package cc.hyperium.launch
 
+import cc.hyperium.ClassLoaderHelper
 import cc.hyperium.Hyperium
 import cc.hyperium.launch.patching.PatchManager
 import net.minecraft.launchwrapper.ITweaker
@@ -46,7 +47,13 @@ class HyperiumTweaker : ITweaker {
         } catch (ignored: IOException) {
         }
 
-        HyperiumTweakerInjector.callFromClassloader(classLoader,optifine)
+        try {
+            val clazz = Class.forName("cc.hyperium.ClassLoaderHelper", false, classLoader)
+            val m = clazz.getMethod("injectIntoClassLoader", *arrayOf<Class<*>>(Boolean::class.java))
+            m.invoke(null, optifine)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
         try {
             classLoader.addURL(

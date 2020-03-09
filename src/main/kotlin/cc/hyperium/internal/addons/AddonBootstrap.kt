@@ -116,6 +116,7 @@ object AddonBootstrap {
      * This should be called before Minecraft's classes are loaded.
      * In this case we use {@link net.minecraft.launchwrapper.ITweaker}
      */
+    @JvmStatic
     fun init() {
         if (phase != Phase.NOT_STARTED) {
             throw AddonLoadException("Cannot initialise bootstrap twice")
