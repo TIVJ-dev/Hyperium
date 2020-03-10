@@ -17,6 +17,8 @@
 
 package cc.hyperium.internal.addons;
 
+import cc.hyperium.handlers.handlers.keybinds.HyperiumKeybind;
+
 /**
  * Interface of which the main class of an Addon must implement
  *
@@ -43,5 +45,9 @@ public interface IAddon {
    * This does not need to be overriden if it's not needed
    */
   default void sendDebugInfo() {
+  }
+
+  default HyperiumKeybind[] addKeybinds() {
+    return new HyperiumKeybind[0];
   }
 }

@@ -21,6 +21,8 @@ import cc.hyperium.Hyperium;
 import cc.hyperium.event.InvokeEvent;
 import cc.hyperium.event.client.GameShutDownEvent;
 import cc.hyperium.handlers.handlers.keybinds.keybinds.*;
+import cc.hyperium.internal.addons.AddonMinecraftBootstrap;
+import cc.hyperium.internal.addons.IAddon;
 import net.minecraft.client.Minecraft;
 
 import java.util.HashMap;
@@ -48,6 +50,11 @@ public class HyperiumKeybindHandler {
     // Register a zoom key if Optifine is not detected.
     if (!Hyperium.INSTANCE.isOptifineInstalled())
       registerBinds(new ZoomKeybind());
+
+    // Register also addons' keybinds
+    for (IAddon addon : AddonMinecraftBootstrap.getLoadedAddons()) {
+        registerBinds(addon.addKeybinds());
+    }
 
     // Init & load the config.
     config = new KeybindConfiguration(this);
