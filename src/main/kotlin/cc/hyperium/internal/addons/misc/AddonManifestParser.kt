@@ -18,6 +18,7 @@
 package cc.hyperium.internal.addons.misc
 
 import cc.hyperium.internal.addons.AddonManifest
+import cc.hyperium.internal.addons.AddonResourcePacks
 import com.google.common.io.Files
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -75,6 +76,9 @@ class AddonManifestParser {
                 throw AddonLoadException("Invalid addon manifest (Must include name, version and mainClass)")
             }
             this.json = json
+
+            val resourcePackEntry = jar.getEntry("resourcepack.zip")
+            if (resourcePackEntry != null) AddonResourcePacks.addResourcePack(jar.getInputStream(resourcePackEntry))
         } catch (e: Exception) {
             e.printStackTrace()
             throw AddonLoadException("Exception reading manifest")
