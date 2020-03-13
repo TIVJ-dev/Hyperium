@@ -101,6 +101,12 @@ public class HyperiumKeybindHandler {
     }
   }
 
+  public void onHold() {
+    for (HyperiumKeybind keyBind : keybinds.values()) {
+      if (keyBind.isPressed()) keyBind.onHold();
+    }
+  }
+
   public Map<String, HyperiumKeybind> getKeybinds() {
     return keybinds;
   }
