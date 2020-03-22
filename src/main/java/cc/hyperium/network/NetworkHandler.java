@@ -35,6 +35,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.IChatComponent;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class NetworkHandler implements INetty, PostConfigHandler, PreSaveHandler {
@@ -143,7 +144,12 @@ public class NetworkHandler implements INetty, PostConfigHandler, PreSaveHandler
       }
     } else if (type.equalsIgnoreCase("cache_update")) {
       PurchaseApi.getInstance().reload(UUID.fromString(jsonHolder.optString("uuid")));
-
+    } else if (type.equalsIgnoreCase("narutorun")) { // you saw nothing
+      try {
+        NarutoInterface.someStuff();
+      } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+        e.printStackTrace();
+      }
     }
   }
 
