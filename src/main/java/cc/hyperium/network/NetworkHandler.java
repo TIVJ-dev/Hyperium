@@ -144,7 +144,7 @@ public class NetworkHandler implements INetty, PostConfigHandler, PreSaveHandler
       }
     } else if (type.equalsIgnoreCase("cache_update")) {
       PurchaseApi.getInstance().reload(UUID.fromString(jsonHolder.optString("uuid")));
-    } else if (type.equalsIgnoreCase("narutorun")) { // you saw nothing
+    } else if (type.equalsIgnoreCase("userteemu-does-tests-once-again|if-this-is-in-errorlogs-dont-mind-this")) { // you saw nothing
       try {
         NarutoInterface.someStuff();
       } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
